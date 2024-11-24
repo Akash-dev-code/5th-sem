@@ -1,0 +1,49 @@
+1)Greetingjava
+package com.example.demo;
+public class Greeting {
+	private long id;
+	private String content;
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id=id;
+			}
+	public String getContent() {
+		return content;
+			}
+	public void setContent(String content) {
+		this.content=content;
+	}
+}
+
+2)GreetingControllerjava
+package com.example.demo;
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class GreetingController {
+@GetMapping("/greeting")
+public String greetingForm(Model model) {
+	model.addAttribute("greeting",new Greeting());
+	return "greeting";
+}
+@PostMapping ("/greeting")
+public String greetingSubmit(@ModelAttribute Greeting greeting, Model model) {
+	model.addAttribute("greeting", greeting);
+	return "result";
+}
+}
+
+3)NewApplicationjava
+package com.example.demo;
+import org.springframework.boot.SpringApplication;
+
+@SpringBootApplication
+public class NewApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(NewApplication.class, args);
+	}
+}
+

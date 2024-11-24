@@ -1,0 +1,194 @@
+1. Address
+package com.example.demo; 
+
+public class Address { 
+
+private String city; 
+
+private String state; 
+
+private String country; 
+
+public String getCity() 
+
+ { 
+
+return city; 
+
+} 
+
+public void setCity(String city) 
+
+ { 
+
+this.city = city; 
+
+} 
+
+public String getState()  
+
+{ 
+
+return state; 
+
+} 
+
+public void setState(String state)  
+
+{ 
+
+this.state = state; 
+
+} 
+
+public String getCountry()  
+
+{ 
+
+return country; 
+
+} 
+
+public void setCountry(String country)  
+
+{ 
+
+this.country = country; 
+
+} 
+
+ 
+
+public String toString() 
+
+{ 
+
+return city+" "+state+" "+country; 
+
+} 
+
+} 
+
+
+
+2. Employee.java
+package com.example.demo; 
+
+public class Employee { 
+
+private int id; 
+
+private String name; 
+
+private Address address; 
+
+public int getId()  
+
+{ 
+
+return id; 
+
+} 
+
+public void setId(int id) 
+
+ { 
+
+this.id = id; 
+
+} 
+
+public String getName()  
+
+{ 
+
+return name; 
+
+} 
+
+public void setName(String name)  
+
+{ 
+
+this.name = name; 
+
+} 
+
+public Address getAddress() 
+
+ { 
+
+return address; 
+
+} 
+
+public void setAddress(Address address)  
+
+{ 
+
+this.address = address; 
+
+} 
+
+public String toString() 
+
+{ 
+
+return id+" "+name+" "+address;   
+
+} 
+
+} 
+
+
+3. PdApplication.java
+package com.example.demo; 
+
+import org.springframework.boot.SpringApplication; 
+
+import org.springframework.boot.autoconfigure.SpringBootApplication; 
+
+import org.springframework.context.support.ClassPathXmlApplicationContext; 
+
+ 
+
+@SpringBootApplication 
+
+public class PdApplication  
+
+{ 
+
+public static void main(String[] args)  
+
+{ 
+
+//SpringApplication.run(Pd1Application.class, args);		
+	ClassPathXmlApplicationContext context=new 
+			ClassPathXmlApplicationContext("Emp.xml");		
+	System.out.println(context.getBean("e1")); 
+
+} 
+
+} 
+
+Emp.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <bean id="a1" class="com.example.demo.Address">
+<property name="city" value="LA"></property>
+<property name="state" value="california"></property>
+<property name="country" value="USA"></property>
+</bean>
+<bean id="e1" class="com.example.demo.Employee">
+<property name="id" value="1"></property>
+<property name="name" value="Rose"></property>
+ <property name="address" ref="a1"></property>
+ 
+</bean>
+</beans>
+
+
+

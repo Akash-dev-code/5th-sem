@@ -1,0 +1,189 @@
+(PersonFrom)
+
+package com.example.demo;
+
+import java.util.Date;
+import jakarta.validation.constraints.*;
+
+public class PersonForm {
+
+    @NotNull
+    @Size(min = 3, max = 30)
+    private String name;
+
+    @NotNull
+    @Min(18)
+    private int age;
+
+    @NotNull
+    @Size(min = 10, max = 10)
+    @Digits(integer = 10, fraction = 0, message = "Enter a valid phone number")
+    private String phone;
+
+    @NotBlank
+    @Email(message = "Enter a valid email address")
+    private String email;
+
+    @NotNull
+    @Past
+    private Date date;
+
+    // Getters and Setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + age + " " + phone;
+    }
+}
+
+(Validation1Application)
+
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Validation1Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Validation1Application.class, args);
+	}
+
+}
+
+(webController)
+
+package com.example.demo;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import jakarta.validation.Valid;
+import org.springframework.ui.Model;
+
+@Controller
+public class webController implements WebMvcConfigurer {
+
+    @GetMapping("/")
+    public String showForm(PersonForm personForm, Model model) {
+        model.addAttribute("personForm", personForm);
+        return "form";
+    }
+
+    @PostMapping("/")
+    public String checkPersonInfo(@Valid PersonForm personForm, BindingResult bindingResult, Model model) {
+        model.addAttribute("personForm", personForm);
+        if (bindingResult.hasErrors()) {
+            return "form";
+        }
+        return "results";
+    }
+}
+
+(from.html)
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+</head>
+<body>
+<center>
+<h1 textaligncenter="Something!"> </h1>
+    <form action="#" th:action="@{/}" th:object="${personForm}" method="post">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" th:field="*{name}" /></td>
+                <td th:errors="*{name}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Age:</td>
+                <td><input type="text" th:field="*{age}" /></td> 
+                <td th:errors="*{age}">Age Error</td>
+            </tr>
+            <tr>
+                <td>Phone no:</td>
+                <td><input type="text" th:field="*{phone}" /></td>
+                <td th:errors="*{phone}">Phone Error</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" th:field="*{email}" /></td>
+                <td th:errors="*{email}">Email Error</td>
+            </tr>
+            <tr>
+                <td>Date:</td>
+                <td><input type="text" th:field="*{date}" /></td>
+                <td th:errors="*{date}">Date Error</td>
+            </tr>
+            <tr>
+                <td colspan="3"><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+    </center>
+</body>
+
+</html>
+
+(result.html)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+</head>
+<body>
+    <p>Welcome</p>
+    <p th:text="'Name: ' + ${personForm.name}"></p>
+    <p th:text="'Age: ' + ${personForm.age}"></p>
+    <p th:text="'Phone no: ' + ${personForm.phone}"></p>
+    <p th:text="'Email: ' + ${personForm.email}"></p>
+    <p th:text="'DOB: ' + ${personForm.date}"></p>
+</body>
+</html>

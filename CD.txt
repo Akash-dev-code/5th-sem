@@ -1,0 +1,76 @@
+1)Employeeprogram
+package com.example.demo;
+
+public class Employee {
+	private int id;
+	private String name;
+	private Address address;
+	public Employee(int id,String name,Address address)
+	{
+		this.id=id;
+		this.name=name;
+		this.address=address;
+	}
+		public String toString()
+	{
+		return id+" "+name+" "+address;
+	}
+	
+}
+
+2)Addressprogram
+package com.example.demo;
+
+public class Address {
+	private String city;
+	private String state;
+	private String country;
+	public Address(String city,String state,String country)	
+	{
+		this.city=city;
+		this.state=state;
+		this.country=country;
+	}
+	public String toString()
+	{
+		return city+" "+state+" "+country;
+	}
+}
+
+3)CdApplicationprogram
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+@SpringBootApplication
+public class CdApplication 
+{
+	public static void main(String[] args) 
+ 	{
+	//SpringApplication.run(CdApplication.class, args);
+	ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("e.xml");
+	System.out.println(context.getBean("e1"));
+	}
+}
+
+4)exml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id="a1" class="com.example.demo.Address">
+<constructor-arg value="LA"></constructor-arg>
+<constructor-arg value="california"></constructor-arg>
+<constructor-arg value="USA"></constructor-arg>
+</bean>
+<bean id="e1" class="com.example.demo.Employee">
+<constructor-arg value="1"></constructor-arg>
+<constructor-arg value="Rose"></constructor-arg>
+<constructor-arg> 
+<ref bean="a1"></ref>
+</constructor-arg>
+</bean>
+</beans>
