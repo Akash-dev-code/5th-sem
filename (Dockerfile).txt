@@ -1,0 +1,26 @@
+("Dockerfile")<-- How to save it in notepad
+
+FROM openjdk:21
+WORKDIR /user/src/siddarth1
+COPY . /user/src/siddarth1
+RUN javac HDemo.java
+CMD ["java","HDemo"]
+
+----------------------------------------------------
+
+(HDemo.java)
+
+public class HDemo
+{
+	public class void main (Strings args[])
+	{
+		System.out.println("Hello Tom");
+}
+}
+
+-----------------------------------------------------
+
+(Run command for Docker)
+
+ -->  docker build -t d12 .
+--->  docker run d12
